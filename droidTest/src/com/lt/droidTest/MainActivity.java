@@ -22,6 +22,8 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,25 +38,38 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	Button connect;
+	Button endsong;
 	TextView display;
 	MediaPlayer bgSong;
 	EditText enterIp;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		final songAsyncTaskTest getSongs = new songAsyncTaskTest();
-		connect = (Button)findViewById(R.id.connect);
-		enterIp = (EditText)findViewById(R.id.enterIp);
-		connect.setOnClickListener(new OnClickListener(){
+		connect = (Button) findViewById(R.id.connect);
+		endsong = (Button) findViewById(R.id.endSong);
+		enterIp = (EditText) findViewById(R.id.enterIp);
+		connect.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
 				getSongs.URL = enterIp.getText().toString();
 				getSongs.execute();
 			}
+
+		});
+		
+		endsong.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				
+				
+			}
 			
-		});	
+			
+		});
 	}
 
 	@Override
@@ -69,28 +84,40 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			//URL = "http://67.194.198.197";
-			int timeout = 10000; // 5 seconds
-			HttpParams params1 = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(params1, timeout);
-			int timoutSocket = 10000; // wait for data
-			HttpConnectionParams.setSoTimeout(params1, timoutSocket);
+			// URL = "http://67.194.198.197";
+				int timeout = 10000; // 5 seconds
+				HttpParams params1 = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(params1, timeout);
+				int timoutSocket = 10000; // wait for data
+				HttpConnectionParams.setSoTimeout(params1, timoutSocket);
 
-			HttpClient httpClient = new DefaultHttpClient(params1);
-			HttpPost httppost = new HttpPost(
-					"http://"+URL+"/getData.php");
-			List<NameValuePair> namevaluepairs = new ArrayList<NameValuePair>();
-			namevaluepairs.add(new BasicNameValuePair("command", "hello"));
+				HttpClient httpClient = new DefaultHttpClient(params1);
+				HttpPost httppost = new HttpPost("http://" + URL
+						+ "/getData.php");
+				List<NameValuePair> namevaluepairs = new ArrayList<NameValuePair>();
+				namevaluepairs.add(new BasicNameValuePair("command", "hello"));
 
-			try {
-				httppost.setEntity(new UrlEncodedFormEntity(namevaluepairs));
-				ResponseHandler<String> responseHandler = new BasicResponseHandler();
-				response = httpClient.execute(httppost, responseHandler);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// return response;
+				try {
+					httppost.setEntity(new UrlEncodedFormEntity(namevaluepairs));
+					ResponseHandler<String> responseHandler = new BasicResponseHandler();
+					response = httpClient.execute(httppost, responseHandler);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					/*AlertDialog.Builder builder = new AlertDialog.Builder(
+							MainActivity.this);
+					builder.setMessage("Cannot connect to that IP address")
+							.setCancelable(false)
+							.setNegativeButton("No",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog, int id) {
+											dialog.cancel();
+										}
+									});
+					AlertDialog alert = builder.create();*/
+				}
+				// return response;
 			return null;
 		}
 
@@ -121,25 +148,30 @@ public class MainActivity extends Activity {
 									result).toString();
 							int timeout = 10000; // 5 seconds
 							HttpParams params1 = new BasicHttpParams();
-							HttpConnectionParams.setConnectionTimeout(params1,timeout);
+							HttpConnectionParams.setConnectionTimeout(params1,
+									timeout);
 							int timoutSocket = 10000; // wait for data
-							HttpConnectionParams.setSoTimeout(params1,timoutSocket);
+							HttpConnectionParams.setSoTimeout(params1,
+									timoutSocket);
 
-							HttpClient httpClient = new DefaultHttpClient(params1);
-							HttpPost httppost = new HttpPost("http://67.194.112.231/playSong.php");
+							HttpClient httpClient = new DefaultHttpClient(
+									params1);
+							HttpPost httppost = new HttpPost(
+									"http://67.194.112.231/playSong.php");
 							List<NameValuePair> namevaluepairs = new ArrayList<NameValuePair>();
-							namevaluepairs.add(new BasicNameValuePair("json",songName));
-							httppost.setEntity(new UrlEncodedFormEntity(namevaluepairs));
+							namevaluepairs.add(new BasicNameValuePair("json",
+									songName));
+							httppost.setEntity(new UrlEncodedFormEntity(
+									namevaluepairs));
 							ResponseHandler<String> responseHandler = new BasicResponseHandler();
-							response = httpClient.execute(httppost,responseHandler);
+							response = httpClient.execute(httppost,
+									responseHandler);
 
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
 					}
-
 				});
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

@@ -5,24 +5,40 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical" >
-    <EditText 
+
+    <EditText
         android:id="@+id/enterIp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter IP address here"
-        />
-    
-    <Button
-        android:id="@+id/connect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Connect"
-        />
+        android:hint="Enter IP address here" />
 
-    <ListView 
-        android:id="@+id/songListView"
+    <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:gravity="top"
+        android:orientation="horizontal" 
+        android:weightSum="100">
+        
+        <Button
+            android:id="@+id/connect"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:weight="30" />
+
+        <Button
+            android:id="@+id/endSong"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="EndSong"
+            android:weight="70" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/songListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
