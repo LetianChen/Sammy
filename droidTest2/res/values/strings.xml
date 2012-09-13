@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">DroidTest</string>
+    <string name="hello_world">Your total is 0!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="add">Add One</string>
+    <string name="sub">Sub One</string>
+
+</resources>
